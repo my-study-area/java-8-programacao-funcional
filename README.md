@@ -115,3 +115,52 @@ Estudo de Java 8 no youtube da lista [Java 8: Programação Funcional – Lambda
         * Streams de números aleatórios podem ser obtidos em Random.ints().     
         Fonte: [java 8 streams pare de usar-for e simplifique seu codigo](https://rinaldo.dev/java-8-streams-pare-de-usar-for-e-simplifique-seu-codigo/)
 
+## 3. Pare de retornar NULL, use OPTIONAL do JAVA 8!
+- Antes do Java 8
+    ```java
+    public static Integer converteEmNumeroAntesDoJavaOito(String numeroStr) {
+        try {
+            return Integer.valueOf(numeroStr);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    String string = "1";
+    Integer numero = converteEmNumeroAntesDoJavaOito(string);
+    System.out.println(numero); //1
+    
+    string = "texto";
+    System.out.println(converteEmNumeroAntesDoJavaOito(string)); //null
+    ```
+- Criando Optional
+    ```java
+    public static Optional<Integer> converteEmNumero(String numeroStr) {
+        try {
+            Integer integer = Integer.valueOf(numeroStr);
+            return Optional.of(integer);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    string = "1";
+    Optional<Integer> optional = converteEmNumero(string); 
+    System.out.println(optional); //Optional[1]
+    
+    string = "texto";
+    optional = converteEmNumero(string);
+    System.out.println(optional); //Optional.empty
+    ```
+    - of
+    ```java
+        System.out.println(Optional.of("2"));
+        System.out.println(Optional.of(null)); //dispara NullPointerExceptional
+    ```
+    - ofNullable
+    ```java
+        System.out.println(Optional.ofNullable(null)); // Optional.empty
+        System.out.println(Optional.empty()); //Optional.empty
+    ```
+
+
