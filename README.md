@@ -162,5 +162,66 @@ Estudo de Java 8 no youtube da lista [Java 8: Programação Funcional – Lambda
         System.out.println(Optional.ofNullable(null)); // Optional.empty
         System.out.println(Optional.empty()); //Optional.empty
     ```
+- Usando Optional
 
+    - isPresent
+    ```java
+    Optional<Integer> optionalNumber = converteEmNumero("7");
+    System.out.println(optionalNumber.isPresent()); //true
 
+    Optional<Integer> optionalString = converteEmNumero("teste");
+    System.out.println(optionalString.isPresent()); //false
+    ```
+
+    - get
+    ```java
+    System.out.println(optionalNumber.get()); // 7
+    System.out.println(optionalString.get()); // dispara NoSuchElementException: No value present
+    ```
+
+    - ifPresent
+    ```java
+    optionalNumber.ifPresent(e -> System.out.println(e)); //7
+    optionalString.ifPresent(e -> System.out.println(e)); // obs: não imprime nada
+    ```
+
+    - orElse
+    ```java
+    System.out.println(converteEmNumero("7").orElse(10)); // 7
+    System.out.println(converteEmNumero("texto qualquer").orElse(2)); // 2
+    ```
+
+    - orElseGet
+    ```java
+    // indicado para realizar operações pesadas ao passar uma função como parâmetro
+    System.out.println(converteEmNumero("7").orElseGet(() -> 10)); // 7
+    System.out.println(converteEmNumero("texto qualquer").orElseGet(() -> 10)); // 10
+    ```
+
+    - orElseThrow
+    ```java
+    System.out.println(converteEmNumero("7")
+        .orElseThrow(() -> new NullPointerException("Valor vazio"))); // 7
+    System.out.println(converteEmNumero("texto qualquer")
+        .orElseThrow(() -> new NullPointerException("Valor vazio"))); // dispara NullPointerException: Valor vazio
+    ```
+
+    - findFirst
+    ```java
+    Stream.of(1,2,3)
+        .findFirst()
+        .ifPresent(System.out::println);
+    ```
+- Tipo Primitivo
+
+Exemplo com int (é possível com os outros primitivos)
+```java
+public static OptionalInt converteEmNumeroInt(String numeroStr) {
+    try {
+        Integer integer = Integer.valueOf(numeroStr);
+        return OptionalInt.of(integer);
+    } catch (Exception e) {
+        return OptionalInt.empty();
+    }
+}
+```
