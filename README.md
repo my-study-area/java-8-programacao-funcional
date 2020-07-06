@@ -225,3 +225,53 @@ public static OptionalInt converteEmNumeroInt(String numeroStr) {
     }
 }
 ```
+## 4. Aprenda a fazer REDUCE em STREAMS do JAVA 8!
+- Função de acumulação
+    - Soma
+    ```java
+    List<Integer> list = Arrays.asList(1,2,3,4,5,6);
+    
+    //reduce soma
+    Optional<Integer> reduce = list.stream()
+    .reduce((n1, n2) -> n1 + n2);
+    
+    reduce.ifPresent(System.out::println);
+    ```
+
+    - Multiplicação
+    ```java
+    //reduce multiplicação
+    Optional<Integer> multiplicacao = list.stream()
+            .reduce((n1, n2) -> n1 * n2);
+    multiplicacao.ifPresent(System.out::println); //720
+    ```
+
+    - Concatenação
+    ```java
+    //reduce - concatenaçao
+    String texto ="Um texto qualquer";
+    String[] split = texto.split(" ");
+    List<String> listString = Arrays.asList(split);
+    Optional<String> cancatenacao = listString
+        .stream()
+        .reduce((c1, c2) -> c1.concat(c2));
+    cancatenacao.ifPresent(System.out::println); //Umtextoqualquer
+    ```
+
+    > Obs: As operações de soma, multiplicação e concatenação são associativas, ou seja, 1 + 2 + 3 + 4  = (1+2) + (3+4)
+
+    - Subtração
+    ```java
+    //reduce - subtração : NÃO FAÇA
+    Optional<Integer> subtracao = list.stream()
+    .reduce((n1, n2) -> n1 - n2);
+    subtracao.ifPresent(System.out::println); //-19
+    
+    
+    Optional<Integer> subtracao2 = list.stream()
+            .parallel()
+            .reduce((n1, n2) -> n1 - n2);
+    subtracao2.ifPresent(System.out::println); //-3
+    ```
+
+    > Obs: não usar subtração com reduce, pois a subtração não é uma função associativa
