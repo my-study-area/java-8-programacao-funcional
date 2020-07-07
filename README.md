@@ -275,3 +275,59 @@ public static OptionalInt converteEmNumeroInt(String numeroStr) {
     ```
 
     > Obs: não usar subtração com reduce, pois a subtração não é uma função associativa
+
+- Valor de identidade
+    - Soma
+    ```java
+    //reduce soma
+    Optional<Integer> soma2 = list.stream()
+    .reduce((n1, n2) -> n1 + n2);
+    soma2.ifPresent(System.out::println); //21
+    ```
+
+    - Multiplicação
+    ```java
+    //reduce multiplicação
+    Integer multiplicacao2 = list.stream()
+            .reduce(1,(n1, n2) -> n1 * n2);
+    System.out.println(multiplicacao2); //720
+    ```
+
+    - Concatenação
+    ```java
+    //reduce - concatenaçao
+    String concatenacao2 = listString.stream()
+        .reduce("",(c1, c2) -> c1.concat(c2));
+    System.out.println(concatenacao2); //Umtextoqualquer
+    ```
+
+    - Math.min
+    ```java
+    // reduce - menor valor
+    double menorValor = DoubleStream.of(1.5, 2.9, 6.7)
+        .reduce(Double.POSITIVE_INFINITY, (d1, d2) -> Math.min(d1, d2));
+    System.out.println(menorValor); // 1.5
+    ```
+
+- Função de combinação
+    - Soma
+    ```java
+    Integer soma3 = list.stream()
+        .reduce(0, (n1, n2) -> n1 + n2, (n1, n2) -> n1 + n2);
+    System.out.println(soma3);    
+    ```
+
+    - Map
+    ```java
+    // reduce - map + combiner
+    String reduce = list.stream()
+        .reduce(
+            "", 
+            (n1, n2) -> n1.toString().concat(n2.toString()), 
+            (n1, n2) -> n1.concat(n2)
+            );
+    System.out.println(reduce);
+    ```
+
+- Reduce e Collect  
+    O reduce é utilizado para objetos imutáveis, já o Collect é usado para objetos mutáveis. 
